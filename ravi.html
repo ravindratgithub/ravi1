@@ -1,0 +1,84 @@
+<html>
+<head>
+	<title>task</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</head>
+<body>
+	<!-- gender -->
+	<div class = 'row'>
+      <div class="col-md-6 col-sm-12">
+        <div id="bar1">
+        <div class = 'card'>
+          <div class="card-body">
+            <div id = "bar-chart1">
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- relationship -->
+      <div class="col-md-6 col-sm-12">
+        <div id="bar2">
+        <div class = 'card'>
+          <div class="card-body">
+            <div id = "bar-chart2">
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<script type="text/javascript">
+		$.ajax({
+            url:"http://localhost:5000/get_gender_list",
+            type:"get",
+            success:function(response){ 
+                var data = response;
+                console.log(data[0]['relation']['Husband'])
+                var data2 = [
+			  {
+			    x: ['male', 'female'],
+			    y: [data[0]['gender']['Male'],data[0]['gender']['Female']],
+			    type: 'bar'
+			  }
+			];
+
+			Plotly.newPlot('bar-chart1', data2);
+			 var data1 = [
+			  {
+			    x: ['Husband','Not-in-family','Other-relative','Own-child','Unmarried','Wife'],
+			    y: [data[0]['relation']['Husband'],data[0]['relation']['Not-in-family'],data[0]['relation']['Other-relative'],data[0]['relation']['Own-child'],data[0]['relation']['Unmarried'],data[0]['relation']['Wife']],
+			    type: 'bar'
+			  }
+			];
+
+			Plotly.newPlot('bar-chart2', data1);
+			   
+			}
+
+
+
+
+        })
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
